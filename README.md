@@ -19,7 +19,7 @@
 - Add redux devtools in chrome
 - Login and see if your data is coming properly in the store
 - NavBar should update as soon as user logs in
-- Refactor our code to add constants file + create a components folder 
+- Refactor our code to add constants file + create a components folder
 - You should not be access other routes without login
 - If token is not present, redirect user to login page
 - Logout Feature
@@ -30,42 +30,39 @@
 - New Page - See all my connections
 - New Page - See all my Conenction REquests
 - Feature - Accept/Reject connection request
-- Send/Ignore the user card from the feed 
-- Signup New User 
+- Send/Ignore the user card from the feed
+- Signup New User
 - E2E testing
 
-
-Body 
-    NavBar
-    Route=/  => Feed
-    Route=/login  => Login
-    Route=/connetions => Connections
-    Router=/profile => Profile
-
-
+Body
+NavBar
+Route=/ => Feed
+Route=/login => Login
+Route=/connetions => Connections
+Router=/profile => Profile
 
     # Deployment
 
-    - Signup on AWS 
-    - Launch instance
+    - Signup on AWS
+    - Launch instance (EC2 allows you to create virtual machines, or instances, that run on the aws cloud)
     - chmod 400 <secret>.pem
     - ssh -i "devTinder-secret.pem" ubuntu@ec2-43-204-96-49.ap-south-1.compute.amazonaws.com
     - Install Node version 16.17.0
     - Git clone
-    - Frontend    
+    - Frontend
         - npm install  -> dependencies install
         - npm run build
         - sudo apt update
-        - sudo apt install nginx
-        - sudo systemctl start nginx
+        - sudo apt install nginx (We will use this nginx to host our project. This will create an http server on which we will deploy application)
+        - sudo systemctl start nginx (to start nginx onto our server)
         - sudo systemctl enable nginx
-        - Copy code from dist(build files) to /var/www/html/
-        - sudo scp -r dist/* /var/www/html/
-        - Enable port :80 of your instance
+        - Copy code from dist(build files) to /var/www/html/ (NGINX HTTP server)
+        - sudo scp -r dist/* /var/www/html/  (Copy all files inside dist to /html)
+        - Enable port :80 of your instance (AWS blocks all your ports ENGINX server deployed on port 80)
     - Backend
         - updated DB password
         - allowed ec2 instance public IP on mongodb server
-        - npm intsall pm2 -g
+        - npm intsall pm2 -g  (To keep you application online 24/7)
         - pm2 start npm --name "devTinder-backend" -- start
         - pm2 logs
         - pm2 list, pm2 flush <name> , pm2 stop <name>, pm2 delete <name>
@@ -73,19 +70,19 @@ Body
         - restart nginx - sudo systemctl restart nginx
         - Modify the BASEURL in frontend project to "/api"
 
-
-
-# Ngxinx config: 
+# Ngxinx config:
 
         Frontend = http://43.204.96.49/
         Backend = http://43.204.96.49:7777/
-    
+
         Domain name = devtinder.com => 43.204.96.49
 
         Frontend = devtinder.com
-        Backend = devtinder.com:7777 => devtinder.com/api
+        Backend = devtinder.com:7777 => devtinder.com/api (For this we will use nginx proxy pass)
 
-        nginx config : 
+        sudo nano /etc/nginx/sites-available/default ---> to edit the nginx file
+
+        nginx config :
 
         server_name 43.204.96.49;
 
@@ -98,7 +95,6 @@ Body
             proxy_cache_bypass $http_upgrade;
         }
 
-
 # Addding a custom Domain name
 
     - purchased domain name from godaddy
@@ -106,8 +102,7 @@ Body
     - change the nameservers on godaddy and point it to cloudflare
     - wait for sometime till your nameservers are updated ~15 minutes
     - DNS record: A devtinder.in 43.204.96.49
-    - Enable SSL for website 
-
+    - Enable SSL for website
 
 # Sending Emails via SES
 
@@ -116,7 +111,7 @@ Body
     - Amazon SES: Create an Identity
     - Verify your domain name
     - Verify an email address identity
-    - Install AWS SDK - v3 
+    - Install AWS SDK - v3
     - Code Example https://github.com/awsdocs/aws-doc-sdk-examples/tree/main/javascriptv3/example_code/ses#code-examples
     - Setup SesClient
     - Access Credentials should be created in IAm under SecurityCredentials Tab
@@ -125,8 +120,8 @@ Body
     - Write code for Sending email address
     - Make the email dynamic by passing more params to the run function
 
-
 # Scheduling cron jobs in NodeJS
+
     - Installing node-cron
     - Learning about cron expressions syntax - crontab.guru
     - Schedule a job
@@ -138,9 +133,9 @@ Body
     - Make sendEmail function dynamic
     - bee-queue & bull npm packages
 
-
 # Razorpay Payment Gateway Inegration
-    - Sign up on Razorpay & complete KYC 
+
+    - Sign up on Razorpay & complete KYC
     - Cerated a UI for premium page
     - Creating an API for create order in backend
     - added my key and secret in env file
@@ -155,8 +150,8 @@ Body
     - Ref - https://razorpay.com/docs/webhooks/validate-test/
     - Ref - https://razorpay.com/docs/webhooks/payloads/payments/
 
-
 # Real Time Chat using Websocket(Socket.io)
+
     - Build the UI for a chat window on /chat/:targetUserId
     - Setup socket.io in backend
     - npm i socket.io
@@ -171,3 +166,5 @@ Body
     - Homework: Limit messages when fetching from DB
     - Project Ideas: Tic tac toe game
     - Project Idea 2 : Chess
+
+IAM - gives you permission to different services inside aws

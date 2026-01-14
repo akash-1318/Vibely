@@ -4,19 +4,19 @@ import { useEffect, useState } from "react";
 
 const Premium = () => {
   const [isUserPremium, setIsUserPremium] = useState(false);
-  useEffect(() => {
-    verifyPremiumUser();
-  }, []);
+  // useEffect(() => {
+  //   verifyPremiumUser();
+  // }, []);
 
-  const verifyPremiumUser = async () => {
-    const res = await axios.get(BASE_URL + "/premium/verify", {
-      withCredentials: true,
-    });
+  // const verifyPremiumUser = async () => {
+  //   const res = await axios.get(BASE_URL + "/premium/verify", {
+  //     withCredentials: true,
+  //   });
 
-    if (res.data.isPremium) {
-      setIsUserPremium(true);
-    }
-  };
+  //   if (res.data.isPremium) {
+  //     setIsUserPremium(true);
+  //   }
+  // };
 
   const handleBuyClick = async (type) => {
     const order = await axios.post(
@@ -44,7 +44,7 @@ const Premium = () => {
       theme: {
         color: "#F37254",
       },
-      handler: verifyPremiumUser,
+      // handler: verifyPremiumUser,
     };
 
     const rzp = new window.Razorpay(options);
